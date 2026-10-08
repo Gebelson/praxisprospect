@@ -98,40 +98,39 @@ export const SitesPage: React.FC<SitesPageProps> = ({ onNavigate, preSelectedLea
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-6 animate-in fade-in duration-200">
+    <div className="p-6 sm:p-10 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-              PROTÓTIPOS DE VENDAS
-            </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider uppercase font-semibold border border-primary/30 bg-primary/10 text-foreground mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            Protótipos Rápidos de Venda
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-white uppercase mt-1">
-            GERADOR DE SITES <span className="font-serif italic font-normal text-primary">demonstrativos</span>
-          </h2>
-          <p className="text-xs text-white/50 mt-0.5">
-            Criação de páginas conceituais personalizadas para encantar o lead antes da assinatura.
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground uppercase">
+            Gerador de Sites <span className="font-serif italic font-normal text-muted-foreground">Demonstrativos</span>
+          </h1>
+          <p className="text-xs text-muted-foreground mt-1 max-w-2xl font-sans">
+            Crie uma demonstração visual do site em segundos para apresentar ao lead e acelerar o fechamento do contrato.
           </p>
         </div>
 
         {activePreviewToken && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={() => copyShareableLink(activePreviewToken)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white text-xs font-semibold transition-all"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-card hover:bg-secondary/60 border border-border text-foreground text-xs font-semibold transition-all shadow-xs"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Link Copiado!' : 'Copiar Link'}</span>
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-muted-foreground" />}
+              <span>{copied ? 'Link Copiado!' : 'Copiar Link de Apresentação'}</span>
             </button>
 
             <a
               href={`/api/sites/preview/${activePreviewToken}`}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-black text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-primary/25 hover:scale-105"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-black text-xs font-black uppercase tracking-wider transition-all shadow-md shadow-primary/20"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Abrir em Nova Aba</span>
             </a>
           </div>
@@ -142,30 +141,34 @@ export const SitesPage: React.FC<SitesPageProps> = ({ onNavigate, preSelectedLea
         {/* Left Column: Generator Form & List (1 col) */}
         <div className="space-y-6">
           {/* Generator Form */}
-          <div className="bg-card border border-border rounded-xl p-5 shadow-xs space-y-4">
-            <h3 className="font-bold text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span>Nova Demonstração</span>
-            </h3>
+          <div className="bg-card border border-border rounded-2xl p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-border">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-foreground flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span>Nova Demonstração</span>
+              </h3>
+              <span className="text-[10px] font-mono text-muted-foreground">01. Configuração</span>
+            </div>
 
-            <form onSubmit={handleGenerateSite} className="space-y-3">
+            <form onSubmit={handleGenerateSite} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-semibold text-foreground mb-1">Empresa</label>
+                <label className="block text-xs font-semibold text-foreground mb-1">Nome da Empresa *</label>
                 <input
                   type="text"
                   required
+                  placeholder="Ex: Dra. Juliana Odontologia"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-foreground mb-1">Nicho / Tema</label>
+                <label className="block text-xs font-semibold text-foreground mb-1">Nicho / Especialidade *</label>
                 <select
                   value={niche}
                   onChange={(e) => setNiche(e.target.value)}
-                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
                 >
                   <option value="odontologia">Odontologia & Estética Dental</option>
                   <option value="barbearia">Barbearia & Estilo Masculino</option>
@@ -176,59 +179,75 @@ export const SitesPage: React.FC<SitesPageProps> = ({ onNavigate, preSelectedLea
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-foreground mb-1">Cidade</label>
+                <label className="block text-xs font-semibold text-foreground mb-1">Cidade *</label>
                 <input
                   type="text"
                   required
+                  placeholder="Ex: São Paulo"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-foreground mb-1">Telefone / WhatsApp</label>
+                <label className="block text-xs font-semibold text-foreground mb-1">WhatsApp / Telefone</label>
                 <input
                   type="text"
+                  placeholder="(11) 99999-9999"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground font-mono"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground font-mono focus:outline-none focus:border-foreground"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-foreground mb-1">Endereço (Opcional)</label>
+                <input
+                  type="text"
+                  placeholder="Av. Paulista, 1000"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isGenerating}
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 mt-2"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-black font-black uppercase text-xs tracking-wider hover:bg-primary/90 transition-all shadow-md shadow-primary/20 disabled:opacity-50 mt-2"
               >
                 {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                <span>{isGenerating ? 'Compilando Site...' : 'Gerar Demonstração'}</span>
+                <span>{isGenerating ? 'Criando Site...' : 'Gerar Demonstração Grátis'}</span>
               </button>
             </form>
           </div>
 
           {/* Demos List */}
-          <div className="space-y-2">
-            <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Demonstrações Criadas</h4>
-            <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+          <div className="bg-card border border-border rounded-2xl p-5 shadow-xs space-y-3">
+            <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center justify-between">
+              <span>Demonstrações Salvas</span>
+              <span className="font-mono text-xs">{sites.length}</span>
+            </h4>
+            <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {sites.map((s) => (
                 <div
                   key={s.id}
                   onClick={() => setActivePreviewToken(s.preview_token)}
-                  className={`p-3 rounded-lg border cursor-pointer text-xs transition-all ${
+                  className={`p-3.5 rounded-xl border cursor-pointer text-xs transition-all ${
                     activePreviewToken === s.preview_token
-                      ? 'border-primary bg-primary/10 shadow-xs'
-                      : 'border-border bg-card hover:border-primary/40'
+                      ? 'border-foreground bg-secondary/80 font-semibold shadow-xs'
+                      : 'border-border bg-card hover:bg-secondary/40'
                   }`}
                 >
                   <div className="flex justify-between items-start">
-                    <h5 className="font-bold text-foreground">{s.name}</h5>
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-secondary text-muted-foreground uppercase">
+                    <h5 className="font-bold text-foreground truncate pr-2">{s.name}</h5>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-secondary text-muted-foreground uppercase">
                       {s.template_id}
                     </span>
                   </div>
                   <span className="text-[11px] text-muted-foreground block mt-1">
-                    {s.city} | {s.views_count} visualizações
+                    {s.city} • {s.views_count} visualizações
                   </span>
                 </div>
               ))}
@@ -237,30 +256,30 @@ export const SitesPage: React.FC<SitesPageProps> = ({ onNavigate, preSelectedLea
         </div>
 
         {/* Right Column: Viewport Switcher & Responsive Preview Canvas (3 cols) */}
-        <div className="lg:col-span-3 rounded-3xl bg-white/[0.02] border border-white/10 flex flex-col shadow-2xl overflow-hidden h-[750px] backdrop-blur-xl">
-          {/* Viewport Control Bar with 3 dots */}
-          <div className="p-3.5 border-b border-white/10 bg-black/60 flex items-center justify-between">
+        <div className="lg:col-span-3 rounded-2xl bg-card border border-border flex flex-col shadow-sm overflow-hidden h-[750px]">
+          {/* Viewport Control Bar with Mac dots */}
+          <div className="p-3.5 border-b border-border bg-secondary/40 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+              <div className="flex items-center gap-1.5 mr-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
               </div>
 
-              <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl p-1 ml-2">
+              <div className="flex items-center gap-1 bg-background border border-border rounded-xl p-1">
                 <button
                   onClick={() => setViewportMode('desktop')}
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                    viewportMode === 'desktop' ? 'bg-primary text-black font-bold shadow-xs' : 'text-white/60 hover:text-white'
+                    viewportMode === 'desktop' ? 'bg-primary text-black font-bold shadow-xs' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <Monitor className="w-3.5 h-3.5" />
-                  <span>Desktop</span>
+                  <span>Computador</span>
                 </button>
                 <button
                   onClick={() => setViewportMode('tablet')}
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                    viewportMode === 'tablet' ? 'bg-primary text-black font-bold shadow-xs' : 'text-white/60 hover:text-white'
+                    viewportMode === 'tablet' ? 'bg-primary text-black font-bold shadow-xs' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <Tablet className="w-3.5 h-3.5" />
@@ -269,26 +288,26 @@ export const SitesPage: React.FC<SitesPageProps> = ({ onNavigate, preSelectedLea
                 <button
                   onClick={() => setViewportMode('mobile')}
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                    viewportMode === 'mobile' ? 'bg-primary text-black font-bold shadow-xs' : 'text-white/60 hover:text-white'
+                    viewportMode === 'mobile' ? 'bg-primary text-black font-bold shadow-xs' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <Smartphone className="w-3.5 h-3.5" />
-                  <span>Mobile</span>
+                  <span>Celular</span>
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-[10px] font-mono text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-1 rounded-full">
-              <ShieldAlert className="w-3.5 h-3.5" />
-              <span>Aviso de Demonstração Não Oficial Ativo</span>
+            <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground bg-background border border-border px-3 py-1 rounded-full">
+              <ShieldAlert className="w-3.5 h-3.5 text-amber-500" />
+              <span>Simulador em Tempo Real</span>
             </div>
           </div>
 
           {/* Iframe Canvas Container */}
-          <div className="flex-1 bg-black/40 p-4 flex items-center justify-center overflow-auto custom-scrollbar">
+          <div className="flex-1 bg-secondary/20 p-6 flex items-center justify-center overflow-auto custom-scrollbar">
             {activePreviewToken ? (
               <div
-                className={`h-full bg-black rounded-2xl border border-white/10 shadow-2xl overflow-hidden transition-all duration-300 ${
+                className={`h-full bg-white rounded-xl border border-border shadow-xl overflow-hidden transition-all duration-300 ${
                   viewportMode === 'desktop'
                     ? 'w-full'
                     : viewportMode === 'tablet'
@@ -303,8 +322,10 @@ export const SitesPage: React.FC<SitesPageProps> = ({ onNavigate, preSelectedLea
                 />
               </div>
             ) : (
-              <div className="text-center text-xs font-mono text-white/40">
-                Selecione ou gere uma demonstração de site para visualizar no simulador responsivo.
+              <div className="text-center text-xs text-muted-foreground max-w-sm space-y-2">
+                <Globe2 className="w-8 h-8 text-muted-foreground/60 mx-auto" />
+                <p className="font-semibold text-foreground">Nenhuma demonstração selecionada</p>
+                <p>Preencha os dados da empresa à esquerda e clique em <strong>Gerar Demonstração Grátis</strong> para visualizar o site aqui.</p>
               </div>
             )}
           </div>

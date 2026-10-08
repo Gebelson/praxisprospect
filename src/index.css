@@ -4,44 +4,46 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 4%;
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --primary: 74 100% 44%;
+    /* Cores fiéis extraídas do PDF: Alabaster Stone, Sand Titanium & Electric Lime */
+    --background: 34 24% 94%; /* #F4EFEA - Tom de pedra quente do PDF */
+    --foreground: 228 15% 10%; /* #141519 - Tipografia escura de alta legibilidade */
+    --card: 0 0% 100%; /* #FFFFFF - Cards brancos nítidos e iluminados */
+    --card-foreground: 228 15% 10%;
+    --border: 33 16% 85%; /* #E2DDD5 - Bordas refinadas do PDF */
+    --input: 33 16% 85%;
+    --primary: 74 100% 45%; /* #C4F500 / #D4FF00 - Acento limão elétrico do PDF */
     --primary-foreground: 0 0% 0%;
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 6% 10%;
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
-    --accent: 74 100% 44%;
+    --secondary: 33 20% 90%; /* #ECE5DC - Superfície de apoio titânio */
+    --secondary-foreground: 228 15% 12%;
+    --muted: 33 18% 91%;
+    --muted-foreground: 228 8% 42%; /* #60626E - Texto de apoio claro */
+    --accent: 74 100% 45%;
     --accent-foreground: 0 0% 0%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --ring: 74 100% 44%;
-    --radius: 0.75rem;
+    --ring: 74 100% 45%;
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
-    --card: 240 7% 7%;
-    --card-foreground: 0 0% 98%;
-    --border: 240 5% 15%;
-    --input: 240 5% 15%;
-    --primary: 74 100% 50%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 240 5% 11%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 5% 12%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 74 100% 50%;
-    --accent-foreground: 0 0% 4%;
+    /* Modo Escuro Suave Titânio (baseado nas seções 'Dev Mode' e 'Vamos conversar' do PDF) */
+    --background: 228 12% 10%; /* #15161A */
+    --foreground: 34 20% 95%; /* #F5F1EC */
+    --card: 228 12% 13%; /* #1D1E24 */
+    --card-foreground: 34 20% 95%;
+    --border: 228 8% 22%; /* #31333C */
+    --input: 228 8% 22%;
+    --primary: 74 100% 48%; /* #C8F900 */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 228 10% 17%;
+    --secondary-foreground: 34 20% 95%;
+    --muted: 228 10% 17%;
+    --muted-foreground: 228 8% 65%;
+    --accent: 74 100% 48%;
+    --accent-foreground: 0 0% 0%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
-    --ring: 74 100% 50%;
+    --ring: 74 100% 48%;
   }
 }
 
@@ -50,20 +52,22 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
-/* Custom scrollbars */
+/* Custom scrollbars elegantes */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
-  border-radius: 3px;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
+  background: hsl(var(--muted-foreground) / 0.4);
 }

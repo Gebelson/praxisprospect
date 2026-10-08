@@ -10,6 +10,8 @@ import {
   Printer,
   ChevronDown,
   ChevronUp,
+  X,
+  Check,
 } from 'lucide-react';
 import { NavigationModule } from '../components/Sidebar';
 
@@ -35,6 +37,7 @@ export const ProposalsPage: React.FC<ProposalsPageProps> = ({ onNavigate, initia
   const [selectedProposalId, setSelectedProposalId] = useState<string | null>(null);
   const [proposalDetail, setProposalDetail] = useState<any | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [copiedToken, setCopiedToken] = useState(false);
 
   // Creation form state
   const [companyName, setCompanyName] = useState('Studio Exemplo Odontologia');
@@ -79,136 +82,141 @@ export const ProposalsPage: React.FC<ProposalsPageProps> = ({ onNavigate, initia
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          input: {
-            clientName,
-            companyName,
-            city,
-            projectTitle: `Desenvolvimento de Website Oficial — ${companyName}`,
-            projectType: 'institucional',
-            totalValue: Number(totalValue),
-            paymentPlanChosen: paymentPlan,
-            estimatedDays: Number(estimatedDays),
-            scopeItems: ['Design responsivo', 'Otimização SEO', 'Integração WhatsApp'],
-            pagesList: ['Início (Home)', 'Sobre a Empresa', 'Especialidades / Serviços', 'Contato & Localização'],
-          },
+          companyName,
+          clientName,
+          city,
+          totalValue: Number(totalValue),
+          estimatedDays: Number(estimatedDays),
+          paymentPlan,
         }),
       });
       const data = await res.json();
       if (data.success) {
         setIsCreating(false);
         fetchProposals();
-        viewProposal(data.proposalId);
+        viewProposal(data.proposal.id);
       }
     } catch (err) {
-      console.error('Erro ao criar proposta:', err);
+      console.error('Erro ao gerar proposta:', err);
     }
   };
 
   const copyPortalLink = (token: string) => {
-    const url = `${window.location.origin}/portal/${token}/proposal`;
+    const url = `${window.location.origin}/portal/${token}`;
     navigator.clipboard.writeText(url);
-    alert('Link da proposta para o cliente copiado para a área de transferência!');
+    setCopiedToken(true);
+    setTimeout(() => setCopiedToken(false), 2500);
   };
 
   const formatBRL = (val: number) => {
-    return (val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-200">
+    <div className="p-6 sm:p-10 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-              CONTRATOS & ACORDOS
-            </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider uppercase font-bold border border-primary/30 bg-primary/15 text-foreground mb-3">
+            <FileCheck2 className="w-3.5 h-3.5 text-primary" />
+            Contratos Comerciais & Aceite Digital
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-white uppercase mt-1">
-            PROPOSTAS COMERCIAIS <span className="font-serif italic font-normal text-primary">com aceite digital</span>
-          </h2>
-          <p className="text-xs text-white/50 mt-0.5">
-            Documento contratual formal em 19 cláusulas com assinatura digital auditável por hash SHA-256.
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground uppercase">
+            Propostas <span className="font-serif italic font-normal text-muted-foreground">Comerciais</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl font-sans">
+            Documento formal completo com 19 seções jurídicas, cronograma de entregas e link de aceite digital criptografado.
           </p>
         </div>
 
         <button
           onClick={() => setIsCreating(true)}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-wider text-xs transition-all shadow-lg shadow-primary/25 hover:scale-105"
+          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary/90 text-black font-extrabold uppercase tracking-wider text-xs transition-all shadow-md shadow-primary/25"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4 stroke-[2.5]" />
           <span>Nova Proposta Comercial</span>
         </button>
       </div>
 
       {/* Creation Modal */}
       {isCreating && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-card border border-border w-full max-w-lg rounded-xl p-6 shadow-2xl space-y-4">
-            <h3 className="font-bold text-base text-foreground">Gerar Nova Proposta Comercial</h3>
-            <form onSubmit={handleGenerateProposal} className="space-y-3">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-card border border-border w-full max-w-lg rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-border">
+              <h3 className="font-extrabold text-base text-foreground uppercase tracking-tight">
+                Emitir Nova Proposta Comercial
+              </h3>
+              <button
+                onClick={() => setIsCreating(false)}
+                className="p-1.5 rounded-lg bg-secondary hover:bg-secondary/80 text-foreground"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleGenerateProposal} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-semibold text-foreground mb-1">Nome da Empresa Contratante</label>
+                <label className="block text-xs font-bold text-foreground mb-1">Nome da Empresa Contratante *</label>
                 <input
                   type="text"
                   required
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary font-sans"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-foreground mb-1">Nome do Responsável Legal</label>
+                <label className="block text-xs font-bold text-foreground mb-1">Nome do Responsável Legal *</label>
                 <input
                   type="text"
                   required
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary font-sans"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Cidade</label>
+                  <label className="block text-xs font-bold text-foreground mb-1">Cidade / UF *</label>
                   <input
                     type="text"
                     required
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary font-sans"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Prazo Estimado (dias úteis)</label>
+                  <label className="block text-xs font-bold text-foreground mb-1">Prazo Estimado (dias úteis)</label>
                   <input
                     type="number"
                     required
                     value={estimatedDays}
                     onChange={(e) => setEstimatedDays(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary font-mono"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Investimento Total (R$)</label>
+                  <label className="block text-xs font-bold text-foreground mb-1">Valor Total (R$) *</label>
                   <input
                     type="number"
                     required
                     value={totalValue}
                     onChange={(e) => setTotalValue(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground font-mono"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground font-mono focus:outline-none focus:border-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Condição de Pagamento</label>
+                  <label className="block text-xs font-bold text-foreground mb-1">Condição Comercial</label>
                   <select
                     value={paymentPlan}
                     onChange={(e) => setPaymentPlan(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary font-sans"
                   >
                     <option value="À Vista com 10% de Desconto">À Vista (-10%)</option>
                     <option value="Entrada 50% + Saldo 50% na Entrega">Entrada 50% + Saldo 50%</option>
@@ -222,15 +230,15 @@ export const ProposalsPage: React.FC<ProposalsPageProps> = ({ onNavigate, initia
                 <button
                   type="button"
                   onClick={() => setIsCreating(false)}
-                  className="px-4 py-2 text-xs rounded-lg bg-secondary text-foreground hover:bg-secondary/80"
+                  className="px-4 py-2 text-xs rounded-xl bg-secondary text-foreground hover:bg-secondary/80 font-bold"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90"
+                  className="px-5 py-2 text-xs rounded-xl bg-primary text-black font-extrabold uppercase tracking-wider hover:bg-primary/90 shadow-md shadow-primary/20"
                 >
-                  Gerar 19 Seções
+                  Gerar Contrato Completo
                 </button>
               </div>
             </form>
@@ -242,67 +250,75 @@ export const ProposalsPage: React.FC<ProposalsPageProps> = ({ onNavigate, initia
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Proposal List (1 col) */}
         <div className="space-y-3">
-          <h3 className="font-bold text-xs uppercase tracking-wider text-muted-foreground">Propostas Geradas</h3>
+          <h3 className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+            Propostas Registradas ({proposals.length})
+          </h3>
           {proposals.map((prop) => (
             <div
               key={prop.id}
               onClick={() => viewProposal(prop.id)}
-              className={`p-4 rounded-xl border cursor-pointer transition-all space-y-2 ${
+              className={`p-5 rounded-2xl border cursor-pointer transition-all space-y-2.5 shadow-sm ${
                 selectedProposalId === prop.id
-                  ? 'border-primary bg-primary/5 shadow-xs'
-                  : 'border-border bg-card hover:border-primary/40'
+                  ? 'border-primary bg-primary/10'
+                  : 'border-border bg-card hover:border-primary/50'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-muted-foreground">{prop.proposal_code}</span>
-                  <h4 className="font-bold text-sm text-foreground mt-0.5">{prop.company_name || prop.title}</h4>
+                  <span className="text-[10px] font-mono uppercase text-muted-foreground font-bold">{prop.proposal_code}</span>
+                  <h4 className="font-extrabold text-sm text-foreground mt-0.5">{prop.company_name || prop.title}</h4>
                 </div>
                 <span
-                  className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
+                  className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase font-mono ${
                     prop.status === 'accepted'
-                      ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
-                      : 'bg-secondary text-muted-foreground'
+                      ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                      : 'bg-secondary text-muted-foreground border border-border'
                   }`}
                 >
                   {prop.status === 'accepted' ? 'Aprovada' : 'Pendente'}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between text-xs pt-1 border-t border-border/60">
-                <span className="font-bold font-mono text-primary">{formatBRL(prop.total_value)}</span>
-                <span className="text-[11px] text-muted-foreground">Validade: {prop.valid_until}</span>
+              <div className="flex items-center justify-between text-xs pt-1.5 border-t border-border">
+                <span className="font-black font-mono text-foreground text-sm">{formatBRL(prop.total_value)}</span>
+                <span className="text-[11px] text-muted-foreground font-sans">Validade: {prop.valid_until}</span>
               </div>
             </div>
           ))}
+
+          {proposals.length === 0 && (
+            <div className="p-8 border border-dashed border-border rounded-2xl text-center text-xs text-muted-foreground bg-card">
+              Nenhuma proposta gerada ainda. Clique em "Nova Proposta Comercial" acima.
+            </div>
+          )}
         </div>
 
         {/* Proposal Reader View (2 cols) */}
-        <div className="lg:col-span-2 bg-card border border-border rounded-xl p-8 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-2 bg-card border border-border rounded-3xl p-7 sm:p-8 shadow-sm flex flex-col justify-between">
           {proposalDetail ? (
             <div className="space-y-6">
               {/* Document Actions Header */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-border gap-3">
                 <div>
-                  <span className="text-xs font-mono uppercase text-primary font-bold">
+                  <span className="text-xs font-mono uppercase text-foreground font-bold">
                     {proposalDetail.proposal.proposal_code}
                   </span>
-                  <h3 className="text-lg font-bold text-foreground mt-0.5">{proposalDetail.proposal.title}</h3>
+                  <h3 className="text-lg font-black text-foreground mt-0.5">{proposalDetail.proposal.title}</h3>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => copyPortalLink(proposalDetail.proposal.public_token)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-secondary hover:bg-secondary/80 border border-border text-foreground text-xs font-medium"
-                    title="Copiar link de acesso para o cliente"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-secondary hover:bg-secondary/80 border border-border text-foreground text-xs font-bold transition-all shadow-xs"
+                    title="Copiar link de acesso para o cliente aprovar"
                   >
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Copiar Link do Cliente</span>
+                    {copiedToken ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedToken ? 'Link Copiado!' : 'Copiar Link do Cliente'}</span>
                   </button>
 
                   <button
                     onClick={() => window.print()}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-secondary hover:bg-secondary/80 border border-border text-foreground text-xs font-medium"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-secondary hover:bg-secondary/80 border border-border text-foreground text-xs font-bold transition-all shadow-xs"
                   >
                     <Printer className="w-3.5 h-3.5" />
                     <span>Imprimir</span>
@@ -312,10 +328,10 @@ export const ProposalsPage: React.FC<ProposalsPageProps> = ({ onNavigate, initia
 
               {/* Digital Acceptance Banner if Accepted */}
               {proposalDetail.acceptances?.length > 0 && (
-                <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3 text-xs text-foreground">
-                  <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3 text-xs text-foreground">
+                  <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-emerald-500">Proposta Aceita Formalmente</h4>
+                    <h4 className="font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">Proposta Aceita Formalmente</h4>
                     <p className="text-muted-foreground mt-0.5">
                       Assinada digitalmente por <strong>{proposalDetail.acceptances[0].accepted_by_name}</strong> em{' '}
                       {new Date(proposalDetail.acceptances[0].accepted_at).toLocaleString('pt-BR')}.
@@ -328,13 +344,13 @@ export const ProposalsPage: React.FC<ProposalsPageProps> = ({ onNavigate, initia
               )}
 
               {/* 19 Clauses Scrollable Document */}
-              <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2">
+              <div className="space-y-6 max-h-[580px] overflow-y-auto pr-2 custom-scrollbar">
                 {proposalDetail.sections.map((sec: any) => (
-                  <div key={sec.number} className="space-y-1.5 border-b border-border/50 pb-4">
-                    <h4 className="font-bold text-xs uppercase tracking-wider text-primary">
+                  <div key={sec.number} className="space-y-1.5 border-b border-border pb-4">
+                    <h4 className="font-black text-xs uppercase tracking-wider text-foreground">
                       {sec.number}. {sec.title}
                     </h4>
-                    <p className="text-xs text-muted-foreground whitespace-pre-line leading-relaxed">
+                    <p className="text-xs text-muted-foreground whitespace-pre-line leading-relaxed font-sans">
                       {sec.content}
                     </p>
                   </div>
@@ -343,7 +359,7 @@ export const ProposalsPage: React.FC<ProposalsPageProps> = ({ onNavigate, initia
             </div>
           ) : (
             <div className="h-64 flex items-center justify-center text-xs text-muted-foreground">
-              Selecione uma proposta para visualizar suas 19 seções contratuais.
+              Selecione uma proposta à esquerda para visualizar suas 19 cláusulas contratuais.
             </div>
           )}
         </div>

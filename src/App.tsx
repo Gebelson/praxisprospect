@@ -28,7 +28,7 @@ export const App: React.FC = () => {
   const portalToken = portalMatch ? portalMatch[1] : null;
 
   const [currentModule, setCurrentModule] = useState<NavigationModule>('dashboard');
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>('light');
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
@@ -38,9 +38,9 @@ export const App: React.FC = () => {
   const [leadForSite, setLeadForSite] = useState<any>(null);
   const [quoteForProposal, setQuoteForProposal] = useState<any>(null);
 
-  // Initialize Theme from localStorage or default dark
+  // Initialize Theme from localStorage or default light (warm stone from PDF)
   useEffect(() => {
-    const savedTheme = (localStorage.getItem('praxis_theme') as 'dark' | 'light') || 'dark';
+    const savedTheme = (localStorage.getItem('praxis_theme') as 'dark' | 'light') || 'light';
     setTheme(savedTheme);
     document.documentElement.classList.toggle('dark', savedTheme === 'dark');
   }, []);
@@ -96,12 +96,12 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#070709] text-white antialiased font-sans relative selection:bg-primary selection:text-black">
+    <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground antialiased font-sans relative selection:bg-primary selection:text-black">
       {/* Background Ambient Glow Orbs */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/3 w-[600px] h-[400px] bg-primary/10 rounded-full blur-[140px] opacity-60"></div>
-        <div className="absolute top-[50%] -left-40 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[160px] opacity-40"></div>
-        <div className="absolute -bottom-40 right-10 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[180px] opacity-30"></div>
+        <div className="absolute -top-40 left-1/3 w-[600px] h-[400px] bg-primary/15 rounded-full blur-[140px] opacity-40"></div>
+        <div className="absolute top-[50%] -left-40 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[160px] opacity-30"></div>
+        <div className="absolute -bottom-40 right-10 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[180px] opacity-30"></div>
       </div>
 
       {/* 15 Modules Sidebar */}

@@ -14,7 +14,7 @@ import {
   Building2,
   Loader2,
   Radar,
-  ExternalLink,
+  HelpCircle,
 } from 'lucide-react';
 import { DiscoveredLead } from '../../server/src/services/osmService';
 import { NavigationModule } from '../components/Sidebar';
@@ -105,39 +105,32 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
   return (
     <div className="p-6 sm:p-10 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider uppercase font-semibold border border-primary/30 bg-primary/10 text-primary mb-3">
-            <Radar className="w-3.5 h-3.5 animate-pulse text-primary" />
-            Fontes Abertas & Rastreabilidade LGPD
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider uppercase font-bold border border-primary/30 bg-primary/15 text-foreground mb-3">
+            <Radar className="w-3.5 h-3.5 text-primary" />
+            Busca Territorial Gratuita (OpenStreetMap)
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">
-            Prospecção <span className="font-serif italic font-normal text-primary">Geoespacial</span>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground uppercase">
+            Encontrar <span className="font-serif italic font-normal text-muted-foreground">Novos Clientes</span>
           </h1>
-          <p className="text-xs text-neutral-400 mt-1 max-w-2xl font-sans">
-            Varredura territorial autônoma via Overpass API (OpenStreetMap) com auditoria instantânea de maturidade web a custo R$ 0.
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl font-sans">
+            Descubra empresas na sua região, identifique quem ainda não tem site profissional e importe direto para o seu CRM comercial.
           </p>
         </div>
       </div>
 
-      {/* Query Filter Box (Luxury 3-dot window frame) */}
-      <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-6 backdrop-blur-xl shadow-2xl relative overflow-hidden">
-        {/* Glow ambient accent */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="flex items-center justify-between pb-4 mb-5 border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 mr-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-            </div>
-            <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest font-semibold">
-              Parâmetros de Varredura Territorial
+      {/* Query Filter Box (Card Iluminado & Intuitivo) */}
+      <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="flex items-center justify-between pb-4 border-b border-border">
+          <div className="flex items-center gap-2.5">
+            <span className="font-mono text-xs font-black text-primary">01.</span>
+            <span className="font-bold text-xs uppercase tracking-wider text-foreground">
+              Onde e o que você deseja buscar?
             </span>
           </div>
-          <span className="text-[11px] font-mono text-primary bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded-full">
-            API OVERPASS FREE
+          <span className="text-[11px] font-mono text-muted-foreground bg-secondary px-2.5 py-1 rounded-full border border-border">
+            100% Gratuito
           </span>
         </div>
 
@@ -145,7 +138,7 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {/* City */}
             <div>
-              <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-semibold mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
                 Cidade *
               </label>
               <input
@@ -154,13 +147,13 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 placeholder="Ex: São Paulo, Campinas, Curitiba"
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-white/10 bg-black/40 text-white placeholder:text-neutral-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-sans"
+                className="w-full px-4 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-sans"
               />
             </div>
 
             {/* State */}
             <div>
-              <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-semibold mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
                 Estado (UF)
               </label>
               <input
@@ -169,13 +162,13 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
                 onChange={(e) => setState(e.target.value.toUpperCase())}
                 maxLength={2}
                 placeholder="SP"
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-white/10 bg-black/40 text-white placeholder:text-neutral-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all uppercase font-mono tracking-wider"
+                className="w-full px-4 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all uppercase font-mono tracking-wider"
               />
             </div>
 
             {/* Neighborhood */}
             <div>
-              <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-semibold mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
                 Bairro (Opcional)
               </label>
               <input
@@ -183,22 +176,22 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
                 value={neighborhood}
                 onChange={(e) => setNeighborhood(e.target.value)}
                 placeholder="Ex: Centro, Moema, Jardins"
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-white/10 bg-black/40 text-white placeholder:text-neutral-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-sans"
+                className="w-full px-4 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-sans"
               />
             </div>
 
             {/* Niche */}
             <div>
-              <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-semibold mb-2">
-                Nicho / Categoria *
+              <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
+                Ramo de Atividade *
               </label>
               <select
                 value={niche}
                 onChange={(e) => setNiche(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-white/10 bg-black/40 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-sans"
+                className="w-full px-4 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-sans"
               >
                 {NICHES.map((n) => (
-                  <option key={n.id} value={n.id} className="bg-[#0c0d12] text-white">
+                  <option key={n.id} value={n.id}>
                     {n.label}
                   </option>
                 ))}
@@ -206,31 +199,31 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
             </div>
           </div>
 
-          <div className="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-white/10">
-            <label className="flex items-center gap-2.5 text-xs text-neutral-300 cursor-pointer select-none">
+          <div className="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-border">
+            <label className="flex items-center gap-2.5 text-xs text-foreground cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={onlyWithoutWebsite}
                 onChange={(e) => setOnlyWithoutWebsite(e.target.checked)}
-                className="rounded border-white/20 bg-black/40 text-primary focus:ring-primary accent-primary w-4 h-4 cursor-pointer"
+                className="rounded border-border bg-background text-primary focus:ring-primary w-4 h-4 cursor-pointer accent-primary"
               />
-              <span className="font-sans">Priorizar empresas sem website oficial registrado (Alta conversão)</span>
+              <span className="font-semibold">Mostrar apenas empresas que NÃO possuem website (Maior chance de venda!)</span>
             </label>
 
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-black font-black uppercase text-xs tracking-wider hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-black font-extrabold uppercase text-xs tracking-wider hover:bg-primary/90 transition-all shadow-md shadow-primary/25 disabled:opacity-50"
             >
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin text-black" />
-                  <span>Consultando Overpass API...</span>
+                  <span>Buscando Empresas...</span>
                 </>
               ) : (
                 <>
                   <Search className="w-4 h-4 stroke-[2.5]" />
-                  <span>Executar Varredura</span>
+                  <span>Buscar Empresas</span>
                 </>
               )}
             </button>
@@ -240,7 +233,7 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
 
       {/* Error state */}
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-400 flex items-center gap-2">
+        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-600 dark:text-red-400 flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 shrink-0" />
           <span>{errorMsg}</span>
         </div>
@@ -249,17 +242,17 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
       {/* Results Header */}
       {results.length > 0 && (
         <div className="flex items-center justify-between pt-2">
-          <div className="flex items-center gap-2 text-xs font-medium text-neutral-300">
+          <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
             <Database className="w-4 h-4 text-primary" />
             <span>
-              Encontradas <strong className="text-white font-mono text-sm">{results.length}</strong> empresas em {city} ({niche})
+              Encontradas <strong className="text-foreground font-mono text-sm">{results.length}</strong> empresas em {city} ({niche})
             </span>
           </div>
           <button
             onClick={() => onNavigate('crm')}
-            className="text-xs text-primary hover:text-white font-bold tracking-wider uppercase flex items-center gap-1.5 transition-colors"
+            className="text-xs text-foreground hover:text-primary font-bold tracking-wider uppercase flex items-center gap-1.5 transition-colors"
           >
-            <span>Ver Leads no CRM</span>
+            <span>Ver Leads Salvos no CRM</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -275,30 +268,30 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
           return (
             <div
               key={lead.osmId}
-              className={`bg-white/[0.02] border rounded-2xl p-6 backdrop-blur-xl flex flex-col justify-between transition-all group relative overflow-hidden ${
+              className={`bg-card border rounded-2xl p-6 shadow-sm flex flex-col justify-between transition-all group ${
                 isImported
-                  ? 'border-emerald-500/40 bg-emerald-500/[0.03]'
-                  : 'border-white/10 hover:border-primary/40 hover:bg-white/[0.04]'
+                  ? 'border-emerald-500/50 bg-emerald-500/[0.04]'
+                  : 'border-border hover:border-primary/60'
               }`}
             >
               <div className="space-y-4">
                 {/* Index tag & status pill */}
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-primary/40 group-hover:text-primary transition-colors">
+                    <span className="font-mono text-xs font-black text-primary">
                       {indexNum}.
                     </span>
-                    <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-neutral-400">
+                    <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-secondary text-muted-foreground font-semibold border border-border">
                       {lead.niche}
                     </span>
                   </div>
 
                   {lead.hasWebsite ? (
-                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 font-medium shrink-0 font-mono">
+                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-bold shrink-0 font-mono">
                       Possui Site
                     </span>
                   ) : (
-                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/30 font-black shrink-0 font-mono uppercase">
+                    <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-primary/20 text-foreground border border-primary/30 font-black shrink-0 font-mono uppercase">
                       Sem Site Oficial
                     </span>
                   )}
@@ -306,27 +299,27 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
 
                 {/* Company Name */}
                 <div>
-                  <h3 className="font-black text-sm text-white uppercase tracking-tight group-hover:text-primary transition-colors leading-snug">
+                  <h3 className="font-extrabold text-base text-foreground uppercase tracking-tight group-hover:text-primary transition-colors leading-snug">
                     {lead.name}
                   </h3>
                 </div>
 
                 {/* Details */}
-                <div className="space-y-2 text-xs text-neutral-400 font-sans">
+                <div className="space-y-2 text-xs text-muted-foreground font-sans">
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-neutral-500 shrink-0 mt-0.5" />
+                    <MapPin className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
                     <span className="line-clamp-2 leading-relaxed">{lead.address}</span>
                   </div>
 
                   {lead.phone ? (
-                    <div className="flex items-center gap-2 text-neutral-200 font-mono">
-                      <Phone className="w-3.5 h-3.5 text-primary shrink-0" />
+                    <div className="flex items-center gap-2 text-foreground font-mono font-medium">
+                      <Phone className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                       <span>{lead.phone}</span>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 text-neutral-500 italic text-[11px]">
-                      <Phone className="w-3.5 h-3.5 text-neutral-600 shrink-0" />
-                      <span>Telefone não catalogado</span>
+                    <div className="flex items-center gap-2 text-muted-foreground italic text-[11px]">
+                      <Phone className="w-3.5 h-3.5 shrink-0" />
+                      <span>Telefone não informado</span>
                     </div>
                   )}
 
@@ -337,7 +330,7 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
                         href={lead.website.startsWith('http') ? lead.website : `http://${lead.website}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="truncate text-primary hover:underline text-[11px] font-mono"
+                        className="truncate text-foreground hover:underline text-[11px] font-mono"
                       >
                         {lead.website}
                       </a>
@@ -347,28 +340,28 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
               </div>
 
               {/* Action Bar */}
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-                <span className="text-[10px] text-neutral-500 font-mono">
+              <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
+                <span className="text-[10px] text-muted-foreground font-mono">
                   {lead.source.includes('Overpass') ? 'OpenStreetMap' : 'Dados Abertos'}
                 </span>
 
                 {isImported ? (
-                  <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 font-mono">
+                  <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono">
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>QUALIFICADO NO CRM</span>
+                    <span>Salvo no CRM</span>
                   </span>
                 ) : (
                   <button
                     onClick={() => handleImportLead(lead)}
                     disabled={isImporting}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-primary hover:text-black text-white text-xs font-bold uppercase tracking-wider transition-all border border-white/10 disabled:opacity-50"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-secondary hover:bg-primary hover:text-black text-foreground text-xs font-bold uppercase tracking-wider transition-all border border-border shadow-xs disabled:opacity-50"
                   >
                     {isImporting ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     ) : (
                       <Sparkles className="w-3.5 h-3.5 text-primary group-hover:text-black" />
                     )}
-                    <span>Importar & Qualificar</span>
+                    <span>Importar para CRM</span>
                   </button>
                 )}
               </div>
@@ -378,16 +371,16 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
       </div>
 
       {results.length === 0 && !loading && (
-        <div className="p-16 border border-dashed border-white/10 rounded-2xl text-center space-y-4 bg-white/[0.01]">
-          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto text-primary">
+        <div className="p-16 border border-dashed border-border rounded-3xl text-center space-y-4 bg-card shadow-sm">
+          <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center mx-auto text-primary">
             <Building2 className="w-7 h-7" />
           </div>
           <div>
-            <h3 className="font-black text-base text-white uppercase tracking-tight">
-              Inicie uma Varredura Territorial
+            <h3 className="font-extrabold text-base text-foreground uppercase tracking-tight">
+              Faça sua Primeira Pesquisa de Clientes
             </h3>
-            <p className="text-xs text-neutral-400 max-w-md mx-auto mt-1 font-sans">
-              Selecione uma cidade e nicho comercial acima para buscar potenciais clientes sem website diretamente na malha de dados abertos.
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto mt-1 font-sans">
+              Preencha a cidade e o nicho desejado acima e clique em "Buscar Empresas". O sistema vai listar estabelecimentos reais da região.
             </p>
           </div>
         </div>
@@ -395,4 +388,3 @@ export const ProspectingPage: React.FC<ProspectingPageProps> = ({ onNavigate }) 
     </div>
   );
 };
-

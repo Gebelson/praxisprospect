@@ -146,33 +146,37 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-200">
+    <div className="p-6 sm:p-10 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Header */}
-      <div>
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-            PROSPECÇÃO ATIVA
-          </span>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border pb-6">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider uppercase font-semibold border border-primary/30 bg-primary/10 text-foreground mb-3">
+            <MessageSquare className="w-3.5 h-3.5 text-primary" />
+            Prospecção Ativa & Abordagem Rápida
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground uppercase">
+            Scripts de <span className="font-serif italic font-normal text-muted-foreground">Abordagem Multicanal</span>
+          </h1>
+          <p className="text-xs text-muted-foreground mt-1 max-w-2xl font-sans">
+            Geração de mensagens comerciais personalizadas com 1 clique para WhatsApp Web, Instagram e E-mail sem APIs pagas.
+          </p>
         </div>
-        <h2 className="text-2xl font-black tracking-tight text-white uppercase mt-1">
-          SCRIPTS DE ABORDAGEM <span className="font-serif italic font-normal text-primary">multicanal de alta conversão</span>
-        </h2>
-        <p className="text-xs text-white/50 mt-0.5">
-          Geração de mensagens comerciais personalizadas com links diretos para WhatsApp, Instagram e E-mail sem APIs pagas.
-        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Template & Variables Box (1 col) */}
-        <div className="rounded-2xl p-6 bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xs space-y-4">
-          <h3 className="font-bold text-xs uppercase tracking-widest text-white/70 font-mono">Configuração da Mensagem</h3>
+        <div className="rounded-2xl p-6 bg-card border border-border shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-border">
+            <h3 className="font-bold text-xs uppercase tracking-wider text-foreground">Configurar Abordagem</h3>
+            <span className="text-[10px] font-mono text-muted-foreground">01. Parâmetros</span>
+          </div>
 
           <div>
-            <label className="block text-xs font-semibold text-foreground mb-1.5">Modelo de Mensagem</label>
+            <label className="block text-xs font-semibold text-foreground mb-1.5">Canal & Modelo *</label>
             <select
               value={selectedTemplateId}
               onChange={(e) => setSelectedTemplateId(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground"
+              className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
             >
               {templates.map((tpl) => (
                 <option key={tpl.id} value={tpl.id}>
@@ -182,16 +186,16 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
             </select>
           </div>
 
-          <div className="space-y-3 pt-2 border-t border-border">
-            <span className="text-xs font-semibold text-foreground block">Variáveis do Lead</span>
+          <div className="space-y-3.5 pt-3 border-t border-border">
+            <span className="text-xs font-semibold text-foreground block">Dados do Contato</span>
 
             <div>
-              <label className="block text-[11px] text-muted-foreground mb-1">Empresa</label>
+              <label className="block text-[11px] text-muted-foreground mb-1">Empresa / Negócio</label>
               <input
                 type="text"
                 value={empresa}
                 onChange={(e) => setEmpresa(e.target.value)}
-                className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground"
+                className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
               />
             </div>
 
@@ -202,7 +206,7 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                   type="text"
                   value={cidade}
                   onChange={(e) => setCidade(e.target.value)}
-                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
                 />
               </div>
               <div>
@@ -211,7 +215,7 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                   type="text"
                   value={nicho}
                   onChange={(e) => setNicho(e.target.value)}
-                  className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-foreground"
                 />
               </div>
             </div>
@@ -222,7 +226,7 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground font-mono"
+                className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground font-mono focus:outline-none focus:border-foreground"
               />
             </div>
 
@@ -232,7 +236,7 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                 type="text"
                 value={instagram}
                 onChange={(e) => setInstagram(e.target.value)}
-                className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground font-mono"
+                className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground font-mono focus:outline-none focus:border-foreground"
               />
             </div>
 
@@ -242,22 +246,29 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                 type="text"
                 value={demoLink}
                 onChange={(e) => setDemoLink(e.target.value)}
-                className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground font-mono"
+                className="w-full px-3.5 py-2 text-xs rounded-xl border border-border bg-background text-foreground font-mono focus:outline-none focus:border-foreground"
               />
             </div>
           </div>
         </div>
 
         {/* Live Preview & 1-Click Launch Buttons (2 cols) */}
-        <div className="lg:col-span-2 bg-card border border-border rounded-xl p-6 shadow-xs flex flex-col justify-between space-y-6">
+        <div className="lg:col-span-2 bg-card border border-border rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-border">
-              <h3 className="font-bold text-sm text-foreground">Prévia da Mensagem Gerada</h3>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 mr-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                </div>
+                <h3 className="font-bold text-sm text-foreground">Prévia da Mensagem Personalizada</h3>
+              </div>
               <button
                 onClick={copyText}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-secondary hover:bg-secondary/80 border border-border text-xs text-foreground font-medium"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-secondary hover:bg-secondary/80 border border-border text-xs text-foreground font-medium shadow-xs"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-muted-foreground" />}
                 <span>{copied ? 'Copiado!' : 'Copiar Texto'}</span>
               </button>
             </div>
@@ -266,7 +277,7 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
               readOnly
               value={renderedText}
               rows={12}
-              className="w-full p-4 rounded-lg bg-background border border-border text-xs font-sans text-foreground leading-relaxed resize-none focus:outline-none"
+              className="w-full p-4 rounded-xl bg-background border border-border text-xs font-sans text-foreground leading-relaxed resize-none focus:outline-none"
             />
           </div>
 
@@ -279,10 +290,10 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => recordMessageSent('whatsapp')}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-all shadow-xs"
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all shadow-xs"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>Abrir no WhatsApp Web</span>
+                  <span>Abrir WhatsApp Web</span>
                 </a>
               )}
 
@@ -295,7 +306,7 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                     copyText();
                     recordMessageSent('instagram');
                   }}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-pink-600 hover:bg-pink-500 text-white font-semibold text-xs transition-all shadow-xs"
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs transition-all shadow-xs"
                 >
                   <InstagramIcon className="w-4 h-4" />
                   <span>Copiar e Abrir Instagram</span>
@@ -306,7 +317,7 @@ export const MessagesPage: React.FC<MessagesPageProps> = ({ onNavigate }) => {
                 <a
                   href={mailtoUrl}
                   onClick={() => recordMessageSent('email')}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-all shadow-xs"
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all shadow-xs"
                 >
                   <Mail className="w-4 h-4" />
                   <span>Enviar por E-mail</span>

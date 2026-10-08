@@ -17,6 +17,7 @@ import {
   Plus,
   ArrowRight,
   UserCheck,
+  X,
 } from 'lucide-react';
 import { NavigationModule } from '../components/Sidebar';
 
@@ -121,53 +122,52 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
   );
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-6 animate-in fade-in duration-200">
+    <div className="p-6 sm:p-10 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300">
       {/* Top Header & View Controls */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-              FUNIL DE VENDAS
-            </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider uppercase font-bold border border-primary/30 bg-primary/15 text-foreground mb-3">
+            <Users2 className="w-3.5 h-3.5 text-primary" />
+            Funil de Oportunidades Comerciais
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-white uppercase mt-1">
-            CRM & PIPELINE <span className="font-serif italic font-normal text-primary">de oportunidades</span>
-          </h2>
-          <p className="text-xs text-white/50 mt-0.5">
-            Acompanhamento das oportunidades desde a descoberta até o fechamento contratual.
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground uppercase">
+            Funil de Vendas <span className="font-serif italic font-normal text-muted-foreground">(CRM)</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1 font-sans">
+            Acompanhe o estágio de cada empresa, qualifique o interesse e converta em cliente com 1 clique.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {/* Search */}
           <div className="relative">
-            <Search className="w-3.5 h-3.5 absolute left-3.5 top-3 text-white/40" />
+            <Search className="w-3.5 h-3.5 absolute left-3.5 top-3 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Filtrar por nome, nicho, cidade..."
+              placeholder="Buscar por empresa, nicho ou cidade..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-3.5 py-2 text-xs rounded-xl border border-white/10 bg-white/[0.03] text-white placeholder-white/30 focus:outline-none focus:border-primary w-64 transition-all"
+              className="pl-9 pr-3.5 py-2 text-xs rounded-xl border border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary w-64 transition-all shadow-xs"
             />
           </div>
 
           {/* Toggle View */}
-          <div className="flex items-center bg-white/[0.03] border border-white/10 rounded-xl p-1">
+          <div className="flex items-center bg-card border border-border rounded-xl p-1 shadow-xs">
             <button
               onClick={() => setViewMode('kanban')}
-              className={`p-1.5 rounded-lg text-xs font-medium transition-all ${
-                viewMode === 'kanban' ? 'bg-primary text-black font-bold shadow-xs' : 'text-white/50 hover:text-white'
+              className={`p-1.5 rounded-lg text-xs font-semibold transition-all ${
+                viewMode === 'kanban' ? 'bg-primary text-black font-extrabold shadow-xs' : 'text-muted-foreground hover:text-foreground'
               }`}
-              title="Visualização Kanban"
+              title="Visualização em Colunas Kanban"
             >
               <Kanban className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-lg text-xs font-medium transition-all ${
-                viewMode === 'table' ? 'bg-primary text-black font-bold shadow-xs' : 'text-white/50 hover:text-white'
+              className={`p-1.5 rounded-lg text-xs font-semibold transition-all ${
+                viewMode === 'table' ? 'bg-primary text-black font-extrabold shadow-xs' : 'text-muted-foreground hover:text-foreground'
               }`}
-              title="Visualização em Tabela"
+              title="Visualização em Lista / Tabela"
             >
               <TableIcon className="w-4 h-4" />
             </button>
@@ -177,21 +177,21 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
 
       {/* Kanban View */}
       {viewMode === 'kanban' && (
-        <div className="flex gap-4 overflow-x-auto pb-6 min-h-[550px] custom-scrollbar">
+        <div className="flex gap-5 overflow-x-auto pb-6 min-h-[550px] custom-scrollbar">
           {stages.map((stage) => {
             const stageLeads = filteredLeads.filter((l) => l.stage_id === stage.id);
             return (
               <div
                 key={stage.id}
-                className="w-72 shrink-0 bg-white/[0.02] border border-white/10 rounded-2xl flex flex-col max-h-[75vh] backdrop-blur-md"
+                className="w-72 shrink-0 bg-card border border-border rounded-2xl flex flex-col max-h-[75vh] shadow-sm"
               >
                 {/* Column Header */}
-                <div className="p-3.5 border-b border-white/10 flex items-center justify-between bg-white/[0.02] rounded-t-2xl">
+                <div className="p-4 border-b border-border flex items-center justify-between bg-secondary/30 rounded-t-2xl">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: stage.color }} />
-                    <span className="text-xs font-black uppercase text-white truncate font-sans">{stage.name}</span>
+                    <span className="text-xs font-extrabold uppercase text-foreground truncate font-sans">{stage.name}</span>
                   </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/60 font-bold">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-background border border-border text-foreground font-bold">
                     {stageLeads.length}
                   </span>
                 </div>
@@ -202,38 +202,44 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
                     <div
                       key={lead.id}
                       onClick={() => openLeadDetail(lead.id)}
-                      className="p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer transition-all space-y-2.5 group"
+                      className="p-4 rounded-xl bg-secondary/40 border border-border hover:border-primary/80 hover:bg-card cursor-pointer transition-all space-y-2.5 group shadow-xs"
                     >
                       <div className="flex items-start justify-between gap-1">
-                        <h4 className="text-xs font-bold text-white group-hover:text-primary transition-colors leading-snug">
+                        <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition-colors leading-snug">
                           {lead.company_name}
                         </h4>
                         <span
                           className={`text-[10px] font-mono px-2 py-0.5 rounded-full uppercase font-bold shrink-0 ${
                             lead.score >= 80
-                              ? 'bg-primary/15 text-primary border border-primary/30 shadow-xs'
+                              ? 'bg-primary/20 text-foreground border border-primary/30'
                               : lead.score >= 60
-                              ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                              : 'bg-white/5 text-white/50 border border-white/10'
+                              ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/25'
+                              : 'bg-background text-muted-foreground border border-border'
                           }`}
                         >
                           {lead.score} pts
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] text-white/50 font-mono">
+                      <div className="flex items-center justify-between text-[11px] text-muted-foreground font-mono">
                         <span>{lead.city}</span>
                         <span className="capitalize">{lead.niche}</span>
                       </div>
 
                       {lead.phone && (
-                        <div className="text-[10px] text-white/60 flex items-center gap-1.5 font-mono pt-1 border-t border-white/5">
-                          <Phone className="w-3 h-3 text-primary" />
+                        <div className="text-[11px] text-foreground flex items-center gap-1.5 font-mono pt-1.5 border-t border-border/80">
+                          <Phone className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                           <span>{lead.phone}</span>
                         </div>
                       )}
                     </div>
                   ))}
+
+                  {stageLeads.length === 0 && (
+                    <div className="p-6 text-center text-xs text-muted-foreground border border-dashed border-border rounded-xl">
+                      Nenhum lead nesta etapa
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -243,17 +249,17 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
 
       {/* Table View */}
       {viewMode === 'table' && (
-        <div className="bg-card border border-border rounded-xl overflow-hidden shadow-xs">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-secondary/40 border-b border-border text-muted-foreground font-semibold">
+        <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
+          <table className="w-full text-left text-xs font-sans">
+            <thead className="bg-secondary/50 border-b border-border text-muted-foreground font-bold uppercase tracking-wider text-[11px]">
               <tr>
-                <th className="p-3.5">Empresa</th>
-                <th className="p-3.5">Nicho</th>
-                <th className="p-3.5">Cidade</th>
-                <th className="p-3.5">Telefone</th>
-                <th className="p-3.5">Score</th>
-                <th className="p-3.5">Etapa Atual</th>
-                <th className="p-3.5 text-right">Ação</th>
+                <th className="p-4">Empresa</th>
+                <th className="p-4">Nicho</th>
+                <th className="p-4">Cidade</th>
+                <th className="p-4">Telefone</th>
+                <th className="p-4">Score</th>
+                <th className="p-4">Etapa Atual</th>
+                <th className="p-4 text-right">Ação</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -261,32 +267,32 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
                 <tr
                   key={lead.id}
                   onClick={() => openLeadDetail(lead.id)}
-                  className="hover:bg-secondary/20 cursor-pointer transition-colors"
+                  className="hover:bg-secondary/30 cursor-pointer transition-colors"
                 >
-                  <td className="p-3.5 font-bold text-foreground">{lead.company_name}</td>
-                  <td className="p-3.5 text-muted-foreground capitalize">{lead.niche}</td>
-                  <td className="p-3.5 text-muted-foreground">{lead.city}</td>
-                  <td className="p-3.5 text-foreground">{lead.phone || '—'}</td>
-                  <td className="p-3.5">
-                    <span className="font-mono font-semibold px-2 py-0.5 rounded bg-secondary text-foreground">
+                  <td className="p-4 font-bold text-foreground">{lead.company_name}</td>
+                  <td className="p-4 text-muted-foreground capitalize">{lead.niche}</td>
+                  <td className="p-4 text-muted-foreground">{lead.city}</td>
+                  <td className="p-4 text-foreground font-mono">{lead.phone || '—'}</td>
+                  <td className="p-4">
+                    <span className="font-mono font-bold px-2 py-0.5 rounded-full bg-secondary border border-border text-foreground text-[11px]">
                       {lead.score} pts
                     </span>
                   </td>
-                  <td className="p-3.5">
+                  <td className="p-4">
                     <span
-                      className="px-2 py-0.5 rounded-full text-[11px] font-medium inline-block text-foreground border"
-                      style={{ borderColor: lead.stage_color, backgroundColor: `${lead.stage_color}15` }}
+                      className="px-2.5 py-0.5 rounded-full text-[11px] font-bold inline-block text-foreground border"
+                      style={{ borderColor: lead.stage_color, backgroundColor: `${lead.stage_color}20` }}
                     >
                       {lead.stage_name}
                     </span>
                   </td>
-                  <td className="p-3.5 text-right">
+                  <td className="p-4 text-right">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         openLeadDetail(lead.id);
                       }}
-                      className="text-primary hover:underline font-semibold"
+                      className="text-foreground hover:text-primary font-bold"
                     >
                       Ver Detalhes
                     </button>
@@ -300,24 +306,24 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
 
       {/* Lead Detail Slide-Over Drawer */}
       {selectedLeadId && leadDetail && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end">
           <div className="w-full max-w-xl bg-card border-l border-border h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-200">
             {/* Drawer Header */}
-            <div className="p-6 border-b border-border flex items-start justify-between bg-secondary/20">
+            <div className="p-6 border-b border-border flex items-start justify-between bg-secondary/30">
               <div>
-                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-primary/10 text-primary font-bold">
+                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-primary/20 text-foreground font-bold border border-primary/30">
                   {leadDetail.lead.niche}
                 </span>
-                <h3 className="text-lg font-bold text-foreground mt-1.5">{leadDetail.lead.company_name}</h3>
+                <h3 className="text-lg font-black text-foreground mt-2">{leadDetail.lead.company_name}</h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   {leadDetail.lead.city} - {leadDetail.lead.state} | {leadDetail.lead.address || 'Sem endereço'}
                 </p>
               </div>
               <button
                 onClick={() => setSelectedLeadId(null)}
-                className="text-xs px-2 py-1 rounded bg-secondary hover:bg-secondary/80 text-foreground"
+                className="p-1.5 rounded-lg bg-secondary hover:bg-secondary/80 text-foreground"
               >
-                Fechar
+                <X className="w-4 h-4" />
               </button>
             </div>
 
@@ -332,7 +338,7 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
                     }
                     onNavigate('sites');
                   }}
-                  className="flex items-center justify-center gap-2 p-2.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-all shadow-xs"
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-primary text-black text-xs font-black uppercase tracking-wider hover:bg-primary/90 transition-all shadow-md shadow-primary/20"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Gerar Site Demonstrativo</span>
@@ -340,7 +346,7 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
 
                 <button
                   onClick={() => handleConvertToClient(leadDetail.lead.id)}
-                  className="flex items-center justify-center gap-2 p-2.5 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-500 transition-all shadow-xs"
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider transition-all shadow-md"
                 >
                   <UserCheck className="w-4 h-4" />
                   <span>Converter em Cliente</span>
@@ -349,11 +355,11 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
 
               {/* Stage Selector */}
               <div>
-                <label className="block text-xs font-semibold text-foreground mb-1.5">Mover de Etapa no Funil</label>
+                <label className="block text-xs font-bold text-foreground mb-1.5">Mover de Etapa no Funil</label>
                 <select
                   value={leadDetail.lead.stage_id}
                   onChange={(e) => handleStageChange(leadDetail.lead.id, e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary font-sans"
                 >
                   {stages.map((stg) => (
                     <option key={stg.id} value={stg.id}>
@@ -365,21 +371,21 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
 
               {/* Score Breakdown Section */}
               {leadDetail.score && (
-                <div className="bg-secondary/40 border border-border rounded-xl p-4 space-y-3">
+                <div className="bg-secondary/40 border border-border rounded-2xl p-5 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-foreground">Score Comercial Auditável</span>
-                    <span className="text-sm font-bold font-mono text-primary">
+                    <span className="text-xs font-bold text-foreground">Score Comercial Calculado</span>
+                    <span className="text-sm font-bold font-mono text-foreground">
                       {leadDetail.score.total_score} / 100 ({leadDetail.score.priority})
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground">{leadDetail.score.explanation}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{leadDetail.score.explanation}</p>
 
                   <div className="space-y-2 pt-2 border-t border-border">
                     {leadDetail.score.criteria.map((crit: any, idx: number) => (
                       <div key={idx} className="flex items-start justify-between text-xs gap-2">
                         <div className="flex items-center gap-1.5">
                           {crit.status === 'passed' ? (
-                            <CheckCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                            <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                           ) : (
                             <Clock className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                           )}
@@ -394,8 +400,8 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
 
               {/* Contact Channels */}
               <div className="space-y-2 text-xs">
-                <h4 className="font-semibold text-foreground">Canais de Contato Verificados</h4>
-                <div className="space-y-1.5 text-muted-foreground">
+                <h4 className="font-bold text-foreground">Canais de Contato Verificados</h4>
+                <div className="space-y-1.5 text-muted-foreground font-sans">
                   <div className="flex items-center gap-2">
                     <Phone className="w-3.5 h-3.5 text-primary" />
                     <span>{leadDetail.lead.phone || 'Nenhum telefone público cadastrado'}</span>
@@ -408,24 +414,6 @@ export const CrmPage: React.FC<CrmPageProps> = ({ onNavigate, onSelectLeadForSit
                     <Globe className="w-3.5 h-3.5 text-primary" />
                     <span>{leadDetail.lead.website || 'Sem website oficial'}</span>
                   </div>
-                </div>
-              </div>
-
-              {/* Activity History */}
-              <div className="space-y-3">
-                <h4 className="font-semibold text-xs text-foreground">Histórico de Atividades & Auditoria</h4>
-                <div className="space-y-2.5">
-                  {leadDetail.activities.map((act: any) => (
-                    <div key={act.id} className="text-xs border-l-2 border-primary/40 pl-3 py-1 space-y-0.5">
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-foreground">{act.title}</span>
-                        <span className="text-[10px] text-muted-foreground">
-                          {new Date(act.created_at).toLocaleDateString('pt-BR')}
-                        </span>
-                      </div>
-                      <p className="text-muted-foreground text-[11px]">{act.description}</p>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
